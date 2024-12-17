@@ -1,0 +1,25 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      routes:
+        - id: school-service
+          uri: lb://school-service
+          predicates:
+            - Path=/api/schools/**
+
+        - id: student-service
+          uri: lb://student-service
+          predicates:
+            - Path=/api/students/**
+
+    eureka:
+      client:
+        serviceUrl:
+          defaultZone: http://localhost:8761/eureka/
+      instance:
+        hostname: localhost
